@@ -15,5 +15,5 @@ deploy:
     - uetchy/gh-pages:
         token: $GIT_TOKEN
         repo: Pastor/pastor.github.io
-        domain: pastor.github.com
+        domain: pastor.github.io
         path: public/
