@@ -16,7 +16,7 @@ build:
         flags: --buildDrafts=true
 deploy:
   steps:
-    - lukevivier/gh-pages:
+    - uetchy/gh-pages:
         token: $GIT_TOKEN
         repo: pastor/pastor.github.com
         domain: pastor.github.com
