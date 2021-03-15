@@ -18,4 +18,4 @@ deploy:
         token: $GIT_TOKEN
         repo: Pastor/pastor.github.io
         domain: pastor.github.com
-        basedir: public
+        basedir: public/
