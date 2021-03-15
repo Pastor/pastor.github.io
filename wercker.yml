@@ -1,4 +1,4 @@
-box: debian
+box: golang
 build:
   steps:
     - add-to-known_hosts:
