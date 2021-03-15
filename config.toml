@@ -1,0 +1,77 @@
+baseURL = "https://pastor.github.io"
+languageCode = "ru-RU"
+title = "Хлебников Андрей"
+theme = "blackburn"
+author = "Pastor"
+copyright = "&copy; 2021. All rights reserved."
+canonifyurls = true
+paginate = 10
+
+[indexes]
+tag = "tags"
+topic = "topics"
+
+[params]
+# Shown in the home page
+subtitle = "Всякое"
+brand = "Blackburn"
+googleAnalytics = "Your Google Analytics tracking ID"
+disqus = "pastoroff"
+# CSS name for highlight.js
+highlightjs = "androidstudio"
+highlightjs_extra_languages = ["yaml"]
+dateFormat = "15 Mar 2021, 15:04"
+# Include any custom CSS and/or JS files
+# (relative to /static folder)
+custom_css = ["css/my.css"]
+custom_js = ["js/my.js"]
+
+[params.piwikAnalytics]
+siteid = 2
+piwikroot = "//analytics.example.com/"
+
+[menu]
+# Shown in the side menu.
+[[menu.main]]
+name = "Home"
+pre = "<i class='fa fa-home fa-fw'></i>"
+weight = 1
+identifier = "home"
+url = "/"
+[[menu.main]]
+name = "Posts"
+pre = "<i class='fa fa-list fa-fw'></i>"
+weight = 2
+identifier = "post"
+url = "/post/"
+[[menu.main]]
+name = "About"
+pre = "<i class='fa fa-user fa-fw'></i>"
+weight = 3
+identifier = "about"
+url = "/about"
+[[menu.main]]
+name = "Contact"
+pre = "<i class='fa fa-phone fa-fw'></i>"
+weight = 4
+url = "/contact/"
+
+[social]
+twitter = "pastoroff"
+facebook = "pastoroff"
+#googleplus = "pastoroff"
+#tumblr = "pastoroff"
+instagram = "pastoroff"
+#flickr = "pastoroff"
+#youtube = "pastoroff"
+#vimeo = "pastoroff"
+linkedin = "pastoroff"
+github = "pastor"
+#gitlab = "pastoroff"
+#bitbucket = "pastoroff"
+#stackoverflow = "2994379"
+#steam = "pastoroff"
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
