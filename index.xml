@@ -1,36 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Хлебников Андрей</title>
-    <link>https://pastor.github.io/</link>
-    <description>Recent content on Хлебников Андрей</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ru-RU</language>
-    <copyright>&amp;copy; 2021. All rights reserved.</copyright>
-    
-	<atom:link href="https://pastor.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Обо мне</title>
-      <link>https://pastor.github.io/about/</link>
-      <pubDate>Mon, 15 Mar 2021 13:12:48 +0000</pubDate>
-      
-      <guid>https://pastor.github.io/about/</guid>
-      <description>Обо мне Привет!
-Меня зовут Хлебников Андрей.</description>
-    </item>
-    
-    <item>
-      <title>Контакты</title>
-      <link>https://pastor.github.io/contact/</link>
-      <pubDate>Sun, 14 Mar 2021 19:38:48 +0000</pubDate>
-      
-      <guid>https://pastor.github.io/contact/</guid>
-      <description>По всем вопросам можно обращаться по электронной почте email.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Хлебников Андрей</title><link>https://pastor.github.io/</link><description>Recent content on Хлебников Андрей</description><generator>Hugo -- gohugo.io</generator><language>ru-RU</language><copyright>&amp;copy; 2021. All rights reserved.</copyright><atom:link href="https://pastor.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Обо мне</title><link>https://pastor.github.io/about/</link><pubDate>Mon, 15 Mar 2021 13:12:48 +0000</pubDate><guid>https://pastor.github.io/about/</guid><description>Обо мне Привет!
+Меня зовут Хлебников Андрей.</description></item><item><title>Контакты</title><link>https://pastor.github.io/contact/</link><pubDate>Sun, 14 Mar 2021 19:38:48 +0000</pubDate><guid>https://pastor.github.io/contact/</guid><description>По всем вопросам можно обращаться по электронной почте email.
 Также, связаться можно через социальные сети:
- @pastoroff   @pastoroff   @pastor  </description>
-    </item>
-    
-  </channel>
-</rss>
+@pastoroff @pastoroff @pastor</description></item></channel></rss>
