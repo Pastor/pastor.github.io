@@ -39,7 +39,9 @@
 
   <!-- MathJax -->
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <!--Mermaid-->
+  <script async src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script>
  <!-- RSS -->
   {{ if .OutputFormats.Get "RSS" }}
   <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}"
