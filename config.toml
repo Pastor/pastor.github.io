@@ -55,18 +55,9 @@ url = "/contact/"
 [social]
 twitter = "pastoroff"
 facebook = "pastoroff"
-#googleplus = "pastoroff"
-#tumblr = "pastoroff"
 instagram = "pastoroff"
-#flickr = "pastoroff"
-#youtube = "pastoroff"
-#vimeo = "pastoroff"
 linkedin = "pastoroff"
 github = "pastor"
-#gitlab = "pastoroff"
-#bitbucket = "pastoroff"
-#stackoverflow = "2994379"
-#steam = "pastoroff"
 [markup]
 [markup.goldmark]
 [markup.goldmark.renderer]
