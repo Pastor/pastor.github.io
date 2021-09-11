@@ -1,6 +1,6 @@
 ---
 title: "Проба пера"
-date: 2021-09-10T20:05:24+03:00
+date: 11 Sep 2020, 16:25
 draft: false
 categories: ["other"]
 tags: ["intro"]
