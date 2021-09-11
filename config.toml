@@ -6,6 +6,7 @@ author = "Pastor"
 copyright = "&copy; 2021. All rights reserved."
 canonifyurls = true
 paginate = 10
+disqusShortname = "andreykhlebnikov"
 
 [indexes]
 tag = "tags"
@@ -15,7 +16,6 @@ topic = "topics"
 subtitle = "начало"
 brand = "Blackburn"
 googleAnalytics = "G-Y77JNR3SRV"
-disqus = "pastoroff"
 # CSS name for highlight.js
 highlightjs = "androidstudio"
 highlightjs_extra_languages = ["yaml"]
