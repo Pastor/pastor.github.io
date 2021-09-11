@@ -7,6 +7,7 @@ copyright = "&copy; 2021. All rights reserved."
 canonifyurls = true
 paginate = 10
 disqusShortname = "andreykhlebnikov"
+defaultContentLanguage = 'ru'
 
 [indexes]
 tag = "tags"
@@ -19,7 +20,7 @@ googleAnalytics = "G-Y77JNR3SRV"
 # CSS name for highlight.js
 highlightjs = "androidstudio"
 highlightjs_extra_languages = ["yaml"]
-dateFormat = "15 Mar 2021, 15:04"
+dateFormat = "02 Jan 2006, 15:04"
 # Include any custom CSS and/or JS files
 # (relative to /static folder)
 custom_css = ["/css/my.css"]

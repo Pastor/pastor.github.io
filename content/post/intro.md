@@ -1,6 +1,6 @@
 ---
 title: "Проба пера"
-date: 11 Sep 2020, 16:25
+date: "2021-09-11"
 draft: false
 categories: ["other"]
 tags: ["intro"]
@@ -30,3 +30,13 @@ int main(int argc, char **argv) {
   return EXIT_SUCCESS;
 }
 {{< / highlight >}}
+
+Таблица
+
+{{< pure_table
+  "Колонка №1|Колонка №2|Колонка №3"
+  "Данные 1.1|Данные 1.2|Данные 1.3"
+  "Данные 2.1|Данные 2.2|Данные 2.3"
+  "Данные 3.1|Данные 3.2|Данные 3.3"
+>}}
+
