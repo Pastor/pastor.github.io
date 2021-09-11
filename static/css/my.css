@@ -4,3 +4,10 @@ code.has-jax {
   border: none !important;
   font-size: 100%;
 }
+
+.header {
+  font-family: "Raleway", Arial, Helvetica, sans-serif;
+  color: #a33;
+  text-align: center;
+  padding: 2.5em 2em 0;
+}
