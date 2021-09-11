@@ -87,26 +87,10 @@ Gist
 
 {{< gist spf13 7896402 >}}
 
-<!--Instagram
-
-{{< instagram BWNjjyYFxVx >}} -->
-
 References
 
 https://gohugo.io/content-management/shortcodes
 [Who]({{< relref "about.md#who" >}})
-
-<!--Tweet
-
-{{< tweet 877500564405444608 >}}
-
-Vimeo
-
-{{< vimeo 146022717 >}}
-
-Youtube
-
-{{< youtube w7Ft2ymGmfc >}} -->
 
 Mathematics
 
