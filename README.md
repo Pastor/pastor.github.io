@@ -12,4 +12,5 @@ My personal website hosted on GitHub Pages.
 ## Используется
 - [Hugo](//gohugo.io/)
 - [Pure CSS](//purecss.io/)
+- [petzi53](https://portfolio.peter-baumgartner.net/categories/tutorial/)
 
