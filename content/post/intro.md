@@ -1,7 +1,7 @@
 ---
 title: "Проба пера"
 date: "2021-09-11"
-draft: false
+draft: true
 categories: ["other"]
 tags: ["intro"]
 ---
