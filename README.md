@@ -1,6 +1,6 @@
 # pastor.github.com
 
-[![github pages](https://github.com/Pastor/pastor.github.io/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/Pastor/pastor.github.io/actions/workflows/gh-pages.yml)
+[![github pages](https://github.com/Pastor/pastor.github.io/actions/workflows/hugo.yml/badge.svg)](https://github.com/Pastor/pastor.github.io/actions/workflows/hugo.yml)
 
 My personal website hosted on GitHub Pages.
 
