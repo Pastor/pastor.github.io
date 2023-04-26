@@ -1,4 +1,4 @@
-# pastor.github.com
+# pastor.github.io
 
 [![github pages](https://github.com/Pastor/pastor.github.io/actions/workflows/hugo.yml/badge.svg)](https://github.com/Pastor/pastor.github.io/actions/workflows/hugo.yml)
 
