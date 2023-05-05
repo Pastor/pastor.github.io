@@ -1,16 +1,7 @@
 # pastor.github.io
 
-[![github pages](https://github.com/Pastor/pastor.github.io/actions/workflows/hugo.yml/badge.svg)](https://github.com/Pastor/pastor.github.io/actions/workflows/hugo.yml)
+[![github pages](https://github.com/Pastor/pastor.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/Pastor/pastor.github.io/actions/workflows/ci.yml)
 
-My personal website hosted on GitHub Pages.
-
-## Мотивация
-
-Увиденный мною сайт https://matt.roughan.info привел к использованию `Hugo` в качестве генератора статических страниц для 
-сайта.
-
-## Используется
-- [Hugo](//gohugo.io/)
-- [Pure CSS](//purecss.io/)
-- [petzi53](https://portfolio.peter-baumgartner.net/categories/tutorial/)
+## Пример
+- [MatKlad](https://github.com/matklad/matklad.github.io.git)
 
