@@ -1,0 +1,37 @@
+# OPC UA примитивный датчик.#3 Сборка Open62541.
+
+В качестве фреймворка реализации `Open62541` был выбран проект [Open62541](https://github.com/open62541/open62541). 
+Данный проект является реализацией стандарта `OPC UA` и может использоваться для работы в качестве клиента и в качестве сервера.
+Он поддерживает работу по бинарному протоколу, что для встраиваемых систем, очень актуально.
+
+Под платформу `Pico` в выбранном проекте нет поддержки, хотя заявлена интеграция с `FreeRTOS`. Поэтому сборка проводилась с чистого листа.
+В качестве основы была выбрана более подходящая архитектура (в понятиях проекта это набор окружения целевой платформы) `posix` и добавлена 
+собственная архитектура с наименованием `pico`.
+
+Делем копию `posix` архитектуры 
+
+```console
+cp -R arch/posix arch/pico
+```
+
+Добавляем архитектуру в сборку (файл `arch/CMakeLists.txt`)
+
+```console
+add_subdirectory(pico)
+```
+
+_описание_
+
+## Ссылки:
+
+- [Open62541](https://github.com/open62541/open62541)
+- [Pico. Getting started](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf)
+- [Pico W. Connecting to internet](https://datasheets.raspberrypi.com/picow/connecting-to-the-internet-with-pico-w.pdf)
+- [Pico. C SDK](https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf)
+- [PicoProbe. Usage](https://mcuoneclipse.com/2022/09/17/picoprobe-using-the-raspberry-pi-pico-as-debug-probe/)
+
+```=html
+<style>
+.display { display: block; margin: 1em 0; text-align: center }
+</style>
+```

@@ -1,0 +1,101 @@
+# OPC UA примитивный датчик.#2 Выбор платформы.
+
+## Выбор платформы
+
+Исходя из функциональных требований описанных в предыдущей части к устройство должно иметь следующие характеристики:
+
+- Производительность не менее 40Mhz (_почему?_)
+- Множество свободных (многофункциональных, конфигурируемых) портов ввода вывода
+- Поддержка таких протоколов как `I2C`, `SPI`, а также АЦП
+- Должна иметься возможность отладки
+- Цена
+- Доступность
+- Наличие `Wi-Fi` модуля
+- Габариты
+- _характеристика 4_
+- _характеристика 5_
+
+### STM32 
+
+#### Стоимость
+
+### AVR
+
+- _описание_
+
+#### Стоимость
+
+### PIC платформа PIC32CM JH01(__плохой пример, переделать__)
+
+1. 48 MHz Arm Cortex M0+ Core
+2. 512 KB Flash and 64 KB SRAM
+3. Two CAN transceivers 
+4. Dual 12-bit simultaneous sampling Analog-to-Digital Converters (ADCs)
+5. Timer/Counter for Control (TCC) peripheral provides dedicated timers for industrial and motor control
+6. Flexible peripherals include four Serial Communication Modules (SERCOMs) that can be configured to act as a USART, UART, SPI, I2C, RS485 or LIN bus interface
+
+#### Стоимость
+
+На [официальном сайте](https://www.microchip.com/en-us/development-tool/EV81X90A) производителя единица изделия стоит - 138.00$ без учета доставки. 
+
+### ARM платформа Raspberry PI Pico W
+
+1. Двухядерный `Arm Cortex M0+` процессор, с максимальной изменямой частотой до 133 MHz
+2. 264kB ОЗУ, 2MB программного кода
+3. Поддержка `USB` 1.1
+4. Имеет режимы малого энергопортебления
+5. Программируется переносом прошивки на диск (`UF2`)
+6. 26 многофункциональных `GPIO`
+7. 2 × `SPI`, 2 × `I2C`, 2 × `UART`, 3 × 12 битных АЦП, 16 × ШИМ каналов
+8. Имеет управляемый тамеры
+9. Имеет внутри температурный датчик
+10. Иммет внутри прошивки чипа библиотеку работы с числами с плавующей точкой
+11. 8 × программируемых автомата ввода-вывода (`PIO`)
+12. Wireless (802.11n), single-band (2.4 GHz)
+
+#### Распиновка
+
+![](/assets/picow-pinout.svg)
+
+#### Отладка
+
+В качестве отладочного средства можно использовать второй модуль `Pico` с установленной прошивкой [probe](https://github.com/raspberrypi/picoprobe.git). 
+Второй модуль выступает в роли посредника между хостовым компьютером и основной `Pico` платы. Соединение осуществляется через отладочный порт `SWD`.
+
+![](/assets/picoprobewiring.jpg)
+
+Устанавливается `OpenOCD` в качестве отладочной утилиты.
+
+#### Стоимость
+
+При покупке на территории России примерная цена за единицу - 1000 р. без учета доставки (самовывоз). При заказе на Китайских площадках `Aliexpress`, `TaoBao` и д.р.
+примерная цена за единицу - 450 р. без учета доставки.
+
+### KP580BM80A
+
+- _описание_
+
+#### Стоимость
+
+### Выбор и вывод
+
+_сравниваем_
+
+_отсеиваем_
+
+_делаем выводы_
+
+## Ссылки:
+
+- [Open62541](https://github.com/open62541/open62541)
+- [RP2040](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf)
+- [RP2040. HardWire](https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf)
+- [RP2040. Datasheet](https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf)
+- [Pico W. Datasheet](https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf)
+- [PicoProbe. Usage](https://mcuoneclipse.com/2022/09/17/picoprobe-using-the-raspberry-pi-pico-as-debug-probe/)
+
+```=html
+<style>
+.display { display: block; margin: 1em 0; text-align: center }
+</style>
+```

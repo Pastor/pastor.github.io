@@ -85,9 +85,9 @@ export const base = (
 <body>
   <header>
     <nav>
-      <a class="title" href="/">pastor</a>
-      <a href="/about.html">About</a>
-      <a href="/links.html">Links</a>
+      <a class="title" href="/">Pastor</a>
+      <a href="/about.html">Обо мне</a>
+      <a href="/links.html">Ссылки</a>
     </nav>
   </header>
 
@@ -98,15 +98,15 @@ export const base = (
   <footer class="site-footer">
     <p>
       <a href="https://github.com/pastor/pastor.github.io/edit/master${src}">
-        <i class="fa fa-edit"></i> fix typo
+        <i class="fa fa-edit"></i> Исправить
       </a>
 
       <a href="/feed.xml">
-        <i class="fa fa-rss"></i> rss
+        <i class="fa fa-rss"></i> RSS
       </a>
 
       <a href="https://github.com/pastor">
-        <i class="fa fa-github"></i> pastor
+        <i class="fa fa-github"></i> Pastor
       </a>
     </p>
   </footer>
@@ -120,7 +120,7 @@ const blurb = "Yet another programming blog by Andrey Khlebnikov aka Pastor.";
 export function page(name: string, content: HtmlString) {
   return base({
     path: `/${name}`,
-    title: "pastor",
+    title: "Pastor",
     description: blurb,
     src: `/src/${name}.dj`,
     extra_css: name === "resume" ? "resume.css" : undefined,
@@ -138,7 +138,7 @@ export const post_list = (posts: Post[]): HtmlString => {
 
   return base({
     path: "",
-    title: "pastor",
+    title: "Pastor",
     description: blurb,
     src: "/templates.ts",
     content: html`<ul class="post-list">${list_items}</ul>`,
@@ -181,7 +181,7 @@ export const feed = (posts: Post[]): HtmlString => {
 <link href="${site_url}" rel="alternate" type="text/html"/>
 <updated>${new Date().toISOString()}</updated>
 <id>${site_url}/feed.xml</id>
-<title type="html">matklad</title>
+<title type="html">Pastor</title>
 <subtitle>Yet another programming blog by Andrey Khlebnikov aka Pastor.</subtitle>
 <author><name>Andrey Khlebnikov</name></author>
 ${entries}
@@ -197,7 +197,7 @@ export const feed_entry = (post: Post): HtmlString => {
 <published>${yyyy_mm_dd(post.date)}T00:00:00+00:00</published>
 <updated>${yyyy_mm_dd(post.date)}T00:00:00+00:00</updated>
 <id>${site_url}${post.path.replace(".html", "")}</id>
-<author><name>AAndrey Khlebnikov</name></author>
+<author><name>Andrey Khlebnikov</name></author>
 <summary type="html"><![CDATA[${post.summary}]]></summary>
 <content type="html" xml:base="${site_url}${post.path}"><![CDATA[${post.content}]]></content>
 </entry>
