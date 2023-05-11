@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang='en-US'>
+<head>
+  <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OPC UA примитивный датчик.#2 Выбор платформы.</title>
+  <meta name="description" content="Исходя из функциональных требований описанных в предыдущей части к устройство должно иметь следующие характеристики:">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://pastor.github.io/2023/05/05/opcua-detector-2.html">
+  <link rel="alternate" type="application/rss+xml" title="pastor" href="https://pastor.github.io/feed.xml">
+  <style>
+  @font-face {
+    font-family: 'Open Sans'; src: url('/css/OpenSans-300-Normal.woff2') format('woff2');
+    font-weight: 300; font-style: normal;
+  }
+  @font-face {
+    font-family: 'JetBrains Mono'; src: url('/css/JetBrainsMono-400-Normal.woff2') format('woff2');
+    font-weight: 400; font-style: normal;
+  }
+  @font-face {
+    font-family: 'JetBrains Mono'; src: url('/css/JetBrainsMono-700-Normal.woff2') format('woff2');
+    font-weight: 700; font-style: normal;
+  }
+  @font-face {
+    font-family: 'EB Garamond'; src: url('/css/EBGaramond-400-Normal.woff2') format('woff2');
+    font-weight: 400; font-style: normal;
+  }
+  @font-face {
+    font-family: 'EB Garamond'; src: url('/css/EBGaramond-400-Italic.woff2') format('woff2');
+    font-weight: 400; font-style: italic;
+  }
+  @font-face {
+    font-family: 'EB Garamond'; src: url('/css/EBGaramond-700-Normal.woff2') format('woff2');
+    font-weight: 700; font-style: normal;
+  }
+  @font-face {
+    font-family: 'EB Garamond'; src: url('/css/EBGaramond-700-Italic.woff2') format('woff2');
+    font-weight: 700; font-style: italic;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; margin-block-start: 0; margin-block-end: 0; }
+
+  body {
+    max-width: 80ch;
+    padding: 2ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  header { margin-bottom: 2rem; }
+  header > nav { display: flex; column-gap: 2ch; align-items: baseline; flex-wrap: wrap; }
+  header a { font-style: normal; color: rgba(0, 0, 0, .8); text-decoration: none; }
+  header a:hover { color: rgba(0, 0, 0, .8); text-decoration: underline; }
+  header .title { font-size: 1.25em; flex-grow: 2; }
+
+  footer { margin-top: 2rem; }
+  footer > p { display: flex; column-gap: 2ch; justify-content: center; flex-wrap: wrap; }
+  footer a { color: rgba(0, 0, 0, .8); text-decoration: none; white-space: nowrap; }
+  footer i { vertical-align: middle; color: rgba(0, 0, 0, .8) }
+
+  </style>
+
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a class="title" href="/">Pastor</a>
+      <a href="/about.html">Обо мне</a>
+      <a href="/links.html">Ссылки</a>
+    </nav>
+  </header>
+
+  <main>
+  <article >
+
+    <h1>
+    <a href="#OPC-UA-2">OPC UA примитивный датчик.#2 Выбор платформы. <time datetime="2023-05-05">May 5, 2023</time></a>
+    </h1>
+<section id="s-1">
+
+    <h2>
+    <a href="#s-1">Выбор платформы </a>
+    </h2>
+<p>Исходя из функциональных требований описанных в предыдущей части к устройство должно иметь следующие характеристики:</p>
+<ul>
+<li>
+Производительность не менее 40Mhz (<em>почему?</em>)
+</li>
+<li>
+Множество свободных (многофункциональных, конфигурируемых) портов ввода вывода
+</li>
+<li>
+Поддержка таких протоколов как <code>I2C</code>, <code>SPI</code>, а также АЦП
+</li>
+<li>
+Должна иметься возможность отладки
+</li>
+<li>
+Цена
+</li>
+<li>
+Доступность
+</li>
+<li>
+Наличие <code>Wi-Fi</code> модуля
+</li>
+<li>
+Габариты
+</li>
+<li>
+<em>характеристика 4</em>
+</li>
+<li>
+<em>характеристика 5</em>
+</li>
+</ul>
+<section id="STM32">
+
+    <h3>
+    <a href="#STM32">STM32 </a>
+    </h3>
+<section id="s-2">
+
+    <h4>
+    <a href="#s-2">Стоимость </a>
+    </h4>
+</section>
+</section>
+<section id="AVR">
+
+    <h3>
+    <a href="#AVR">AVR </a>
+    </h3>
+<ul>
+<li>
+<em>описание</em>
+</li>
+</ul>
+<section id="s-3">
+
+    <h4>
+    <a href="#s-3">Стоимость </a>
+    </h4>
+</section>
+</section>
+<section id="PIC-PIC32CM-JH01">
+
+    <h3>
+    <a href="#PIC-PIC32CM-JH01">PIC платформа PIC32CM JH01(<em><em>плохой пример, переделать</em></em>) </a>
+    </h3>
+<ol>
+<li>
+48 MHz Arm Cortex M0+ Core
+</li>
+<li>
+512 KB Flash and 64 KB SRAM
+</li>
+<li>
+Two CAN transceivers
+</li>
+<li>
+Dual 12-bit simultaneous sampling Analog-to-Digital Converters (ADCs)
+</li>
+<li>
+Timer/Counter for Control (TCC) peripheral provides dedicated timers for industrial and motor control
+</li>
+<li>
+Flexible peripherals include four Serial Communication Modules (SERCOMs) that can be configured to act as a USART, UART, SPI, I2C, RS485 or LIN bus interface
+</li>
+</ol>
+<section id="s-4">
+
+    <h4>
+    <a href="#s-4">Стоимость </a>
+    </h4>
+<p>На <a href="https://www.microchip.com/en-us/development-tool/EV81X90A">официальном сайте</a> производителя единица изделия стоит - 138.00$ без учета доставки.</p>
+</section>
+</section>
+<section id="ARM-Raspberry-PI-Pico-W">
+
+    <h3>
+    <a href="#ARM-Raspberry-PI-Pico-W">ARM платформа Raspberry PI Pico W </a>
+    </h3>
+<ol>
+<li>
+Двухядерный <code>Arm Cortex M0+</code> процессор, с максимальной изменямой частотой до 133 MHz
+</li>
+<li>
+264kB ОЗУ, 2MB программного кода
+</li>
+<li>
+Поддержка <code>USB</code> 1.1
+</li>
+<li>
+Имеет режимы малого энергопортебления
+</li>
+<li>
+Программируется переносом прошивки на диск (<code>UF2</code>)
+</li>
+<li>
+26 многофункциональных <code>GPIO</code>
+</li>
+<li>
+2 × <code>SPI</code>, 2 × <code>I2C</code>, 2 × <code>UART</code>, 3 × 12 битных АЦП, 16 × ШИМ каналов
+</li>
+<li>
+Имеет управляемый тамеры
+</li>
+<li>
+Имеет внутри температурный датчик
+</li>
+<li>
+Иммет внутри прошивки чипа библиотеку работы с числами с плавующей точкой
+</li>
+<li>
+8 × программируемых автомата ввода-вывода (<code>PIO</code>)
+</li>
+<li>
+Wireless (802.11n), single-band (2.4 GHz)
+</li>
+</ol>
+<section id="s-5">
+
+    <h4>
+    <a href="#s-5">Распиновка </a>
+    </h4>
+
+<figure>
+
+<img alt="" src="/assets/picow-pinout.svg">
+</figure>
+</section>
+<section id="s-6">
+
+    <h4>
+    <a href="#s-6">Отладка </a>
+    </h4>
+<p>В качестве отладочного средства можно использовать второй модуль <code>Pico</code> с установленной прошивкой <a href="https://github.com/raspberrypi/picoprobe.git">probe</a>. 
+Второй модуль выступает в роли посредника между хостовым компьютером и основной <code>Pico</code> платы. Соединение осуществляется через отладочный порт <code>SWD</code>.</p>
+
+<figure>
+
+<img alt="" src="/assets/picoprobewiring.jpg">
+</figure>
+<p>Устанавливается <code>OpenOCD</code> в качестве отладочной утилиты.</p>
+</section>
+<section id="s-7">
+
+    <h4>
+    <a href="#s-7">Стоимость </a>
+    </h4>
+<p>При покупке на территории России примерная цена за единицу - 1000 р. без учета доставки (самовывоз). При заказе на Китайских площадках <code>Aliexpress</code>, <code>TaoBao</code> и д.р.
+примерная цена за единицу - 450 р. без учета доставки.</p>
+</section>
+</section>
+<section id="KP580BM80A">
+
+    <h3>
+    <a href="#KP580BM80A">KP580BM80A </a>
+    </h3>
+<ul>
+<li>
+<em>описание</em>
+</li>
+</ul>
+<section id="s-8">
+
+    <h4>
+    <a href="#s-8">Стоимость </a>
+    </h4>
+</section>
+</section>
+<section id="s-9">
+
+    <h3>
+    <a href="#s-9">Выбор и вывод </a>
+    </h3>
+<p><em>сравниваем</em></p>
+<p><em>отсеиваем</em></p>
+<p><em>делаем выводы</em></p>
+</section>
+</section>
+<section id="s-10">
+
+    <h2>
+    <a href="#s-10">Ссылки: </a>
+    </h2>
+<ul>
+<li>
+<a href="https://github.com/open62541/open62541">Open62541</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf">RP2040</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf">RP2040. HardWire</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf">RP2040. Datasheet</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf">Pico W. Datasheet</a>
+</li>
+<li>
+<a href="https://mcuoneclipse.com/2022/09/17/picoprobe-using-the-raspberry-pi-pico-as-debug-probe/">PicoProbe. Usage</a>
+</li>
+</ul>
+<style>
+.display { display: block; margin: 1em 0; text-align: center }
+</style>
+</section>
+</article>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <a href="https://github.com/pastor/pastor.github.io/edit/master/src/posts/2023-05-05-opcua-detector-2.dj">
+        <i class="fa fa-edit"></i> Исправить
+      </a>
+
+      <a href="/feed.xml">
+        <i class="fa fa-rss"></i> RSS
+      </a>
+
+      <a href="https://github.com/pastor">
+        <i class="fa fa-github"></i> Pastor
+      </a>
+    </p>
+  </footer>
+</body>
+
+</html>

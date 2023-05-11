@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang='en-US'>
+<head>
+  <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OPC UA примитивный датчик.#1 Общее описание</title>
+  <meta name="description" content="Попробуем описать простейшую функциональность некого мифического простого датчика, который с заданной периодичностью будет
+отсылать показания на сервер.">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://pastor.github.io/2023/05/02/opcua-detector-1.html">
+  <link rel="alternate" type="application/rss+xml" title="pastor" href="https://pastor.github.io/feed.xml">
+  <style>
+  @font-face {
+    font-family: 'Open Sans'; src: url('/css/OpenSans-300-Normal.woff2') format('woff2');
+    font-weight: 300; font-style: normal;
+  }
+  @font-face {
+    font-family: 'JetBrains Mono'; src: url('/css/JetBrainsMono-400-Normal.woff2') format('woff2');
+    font-weight: 400; font-style: normal;
+  }
+  @font-face {
+    font-family: 'JetBrains Mono'; src: url('/css/JetBrainsMono-700-Normal.woff2') format('woff2');
+    font-weight: 700; font-style: normal;
+  }
+  @font-face {
+    font-family: 'EB Garamond'; src: url('/css/EBGaramond-400-Normal.woff2') format('woff2');
+    font-weight: 400; font-style: normal;
+  }
+  @font-face {
+    font-family: 'EB Garamond'; src: url('/css/EBGaramond-400-Italic.woff2') format('woff2');
+    font-weight: 400; font-style: italic;
+  }
+  @font-face {
+    font-family: 'EB Garamond'; src: url('/css/EBGaramond-700-Normal.woff2') format('woff2');
+    font-weight: 700; font-style: normal;
+  }
+  @font-face {
+    font-family: 'EB Garamond'; src: url('/css/EBGaramond-700-Italic.woff2') format('woff2');
+    font-weight: 700; font-style: italic;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; margin-block-start: 0; margin-block-end: 0; }
+
+  body {
+    max-width: 80ch;
+    padding: 2ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  header { margin-bottom: 2rem; }
+  header > nav { display: flex; column-gap: 2ch; align-items: baseline; flex-wrap: wrap; }
+  header a { font-style: normal; color: rgba(0, 0, 0, .8); text-decoration: none; }
+  header a:hover { color: rgba(0, 0, 0, .8); text-decoration: underline; }
+  header .title { font-size: 1.25em; flex-grow: 2; }
+
+  footer { margin-top: 2rem; }
+  footer > p { display: flex; column-gap: 2ch; justify-content: center; flex-wrap: wrap; }
+  footer a { color: rgba(0, 0, 0, .8); text-decoration: none; white-space: nowrap; }
+  footer i { vertical-align: middle; color: rgba(0, 0, 0, .8) }
+
+  </style>
+
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a class="title" href="/">Pastor</a>
+      <a href="/about.html">Обо мне</a>
+      <a href="/links.html">Ссылки</a>
+    </nav>
+  </header>
+
+  <main>
+  <article >
+
+    <h1>
+    <a href="#OPC-UA-1">OPC UA примитивный датчик.#1 Общее описание <time datetime="2023-05-02">May 2, 2023</time></a>
+    </h1>
+<p>Попробуем описать простейшую функциональность некого мифического простого датчика, который с заданной периодичностью будет
+отсылать показания на сервер.</p>
+<ul>
+<li>
+В этой части рассмотрим общее представление о датчике.
+</li>
+<li>
+Общую структуру датчика.
+</li>
+<li>
+Структуру передаваемых данных.
+</li>
+<li>
+Алгоритм передачи информации на сервер.
+</li>
+<li>
+Поведение датчика при обрыве связи.
+</li>
+<li>
+Резервирование передаваемых данных при обрыве связи.
+</li>
+<li>
+Структуру конфигурации.
+</li>
+</ul>
+<section id="s-1">
+
+    <h2>
+    <a href="#s-1">Общее положение </a>
+    </h2>
+<p>Что датчик, что серверная часть, будут использовать <code>open62541</code> как фреймворк для <code>OPC UA</code>. Аутентификация и авторизация клиента (датчика)
+на данном этапе будет отключена.</p>
+</section>
+<section id="s-2">
+
+    <h2>
+    <a href="#s-2">Функциональные требования к датчику </a>
+    </h2>
+<ol>
+<li>
+Датчик должен представлять из себя небольшое устройство с возможностью работы по одному или нескольким каналам связи (<code>Ethernet</code>).
+</li>
+<li>
+Датчик должен иметь возможность передавать несколько значений, несколько типов значений. например если датчик включает в себя
+устройство изменения давления и устройство измерения влажности, оно должно иметь возможность передавать данные с обоих своих устройств.
+</li>
+<li>
+Датчик должен иметь синхронизированное время с сервером приема показаний (<code>NTP</code>).
+</li>
+<li>
+Датчик должен уметь работать в одноранговой (<code>Ethernet</code>) сети и самостоятельно искать в ней сервер для передачи (агрегации) показаний.
+</li>
+<li>
+Должен обеспечивать сохранение полученных показаний (в ограничениях связанных с объемом памяти) при не возможности их передать на сервер.
+</li>
+<li>
+Должен обеспечивать хранение своих настроек в энергонезависимой памяти (<code>EEPROM</code>), с возможностью их изменения без изменения программного
+кода. Также не должен иметь возможности менять настройки из программного кода.
+</li>
+</ol>
+</section>
+<section id="s-3">
+
+    <h2>
+    <a href="#s-3">Общая структура датчика </a>
+    </h2>
+<p>Датчик (устройство) будет состоять из следующих компонент: само устройство (<code>Rspberry Pi Pico W</code>), внешний <code>EEPROM</code> (<code>AT24С256</code>),
+внешней <code>FLASH</code>(<code>W25Q128</code>).</p>
+
+<figure>
+
+<img alt="" src="/assets/fun_schema_1.jpg">
+</figure>
+<p><code>Pico W</code> не имеет своей внутренней <code>EEPROM</code>, поэтому будет использоваться внешняя. Для обеспечания работы со временем, будет использоваться <code>RTC</code>.
+<code>Pico W</code> имеет внутренний модуль <code>RTC</code>, он энергозависимый, т.е. не имеет стороннего питания, поэтому его следует устанавливать при каждом запуске
+устройства. Но исходя из того, что одно из требований - синхронизация по времени, энергозависимость не является причиной отказа от внутреннего
+модуля в замен внешнего.</p>
+</section>
+<section id="s-4">
+
+    <h2>
+    <a href="#s-4">Функциональные требования к серверу </a>
+    </h2>
+<ol>
+<li>
+Сервер должен обеспечивать регистрацию устройства, а также однозначное определение его типа и назначения. передавать устройству
+<code>NodeID</code> в который устройство будет писать показания.
+</li>
+<li>
+Сервер должен сохранять все пришедшие показания, а также, при необходимости, агрегировать их
+</li>
+<li>
+Сервер должен обеспечивать свое нахождение (детектирование) в одноранговой сети (<code>Discovery</code>).
+</li>
+</ol>
+</section>
+<section id="s-5">
+
+    <h2>
+    <a href="#s-5">Общая структура сервера </a>
+    </h2>
+<p>Сервер приема(агрегации) показаний датчиков будет состоять из следующих компонент: модуль <code>RTC</code> (с синхронизацией по <code>NTP</code>), модулем
+обеспечивающим обнаружение сервера в одноранговой сети (<code>multicast</code>), механизмом обеспечивающем регистрацию датчика на сервере, механизмом
+сохранения передаваемых показаний.</p>
+
+<figure>
+
+<img alt="" src="/assets/fun_schema_2.jpg">
+</figure>
+<p>Механизмом который будет обеспечивать сохранение передаваемых датчиком показаний будет служить <code>OPC UA Historization</code></p>
+</section>
+<section id="s-6">
+
+    <h2>
+    <a href="#s-6">Среда функционирования датчиков. Модель среды. </a>
+    </h2>
+<p>Для моделирования среды будут использоваться следующие компоненты: датчики (датчик) на базе <code>Raspberry Pi Pico W</code> с прошивкой обеспечивающей
+описанную ранее функциональность, маршрутизатор (обеспечивающий также <code>Wi-Fi</code>, <code>DHCP</code> и <code>NTP</code> - <code>Mikrotik</code>), сервер <code>OPC UA</code> запущенный на
+платформе <code>PC</code> или на <code>Raspberry Pi 3</code>. Все они будут находится в одноранговой сети.</p>
+
+<figure>
+
+<img alt="" src="/assets/top_model_1.jpg">
+</figure>
+</section>
+<section id="s-7">
+
+    <h2>
+    <a href="#s-7">Структура передаваемых данных </a>
+    </h2>
+<p>Структуру передаваемых на сервер данных(показаний) можно представить в виде <code>C</code> составного типа данных:</p>
+
+<figure class="code-block">
+
+
+<pre><code><span class="hl-keyword">struct</span> <span class="hl-title class_">Packet</span> {</code>
+<code>    UA_DateTime  time;</code>
+<code>    UA_UInt16    kind;</code>
+<code>    UA_Int64     value;</code>
+<code>}</code></pre>
+
+</figure>
+<p>в котором <code>time</code> - это время когда датчик получил конкретное значение, <code>kind</code> - это тип передаваемого значения (обеспечение возможности
+передачи нескольких значений с одного датчика) тут будем иметь явное ограничение в 65535 возможных показаний, <code>value</code> - это непосредственно
+само значение показания.</p>
+<p>Время получения показаний, исходя из функциональных требований, должно быть синхронизировано с сервером приема (агрегации) показаний датчиков.</p>
+<p>Такая же структура данных будет использоваться и при сохранении полученных показаний при не возможности их отсылки на сервер приема
+(агрегации) показаний.</p>
+</section>
+<section id="s-8">
+
+    <h2>
+    <a href="#s-8">Последовательность инициализации датчика в среде </a>
+    </h2>
+<p>После сброса/включения устройства будет выполняться следующа] последовательность дейтсвий:</p>
+<ol>
+<li>
+Чтение параметров (настроек) из внешней памяти <code>EEPROM</code>
+</li>
+<li>
+Инициализация <code>Wi-Fi</code>(Ethernet) модуля для подключения к сети
+</li>
+<li>
+Определение сервера <code>NTP</code> (в представленной выше топологии это тот же сервер что и <code>DHCP</code>). Синхронизация времени и установка <code>RTC</code> модуля.
+</li>
+<li>
+Запуск задачи сохранения показаний в случае невозможности их передать: инициализация внешней <code>FLASH</code> памяти и организация внутреннего получения
+показаний и сохранения их на <code>FLASH</code> (не является критически важным компонентом)
+</li>
+<li>
+Получение из настроек <code>discovery</code> адреса сервера и попытка определения его в сети. В случае если сервер не определен, этот пункт повторяется.
+</li>
+<li>
+После нахождения сервера устанавливается соединение с ним. При не возможности установить соединение повторяется пункт 5
+</li>
+<li>
+После установки соединения производится регистрация устройства на серврере и получение в ответ <code>NodeID</code> для передачи показаний.
+</li>
+<li>
+В случае обрыва соединения переходим в пункт 5 и все показания перенаправляются в задачу сохранения показаний.
+</li>
+<li>
+Если есть сохраненные показания они передаются на сервер в момнт простоя приема показаний и/или по запросу сервера
+</li>
+</ol>
+</section>
+<section id="s-9">
+
+    <h2>
+    <a href="#s-9">Последовательность инициализации и рестрации устройства на серверер </a>
+    </h2>
+<p>После перезагрузки/загрузки сервера выполняется следующая последовательность дейтсвий:</p>
+<ol>
+<li>
+Инициализация сети
+</li>
+<li>
+Синхронизация времени
+</li>
+<li>
+Запуск модуля обнаружения сервера
+</li>
+<li>
+Инициализация функций, типов данный, историчности - для обеспечения приема показаний датчиков и их регистрации
+</li>
+<li>
+Прием соединений
+</li>
+</ol>
+<p>При приеме запроса на регистрацию датчика:</p>
+<ol>
+<li>
+Получение необходимых сведений от устройства (в простейшем случае это <code>MAC</code> адрес, в дальнейшем, при включении аутентификации по сертификату
+сервер будет получать все необходимую информацию о датчике)
+</li>
+<li>
+Поиск устройства, на возможность его регистрации ранее. Если устройство регистрировалось ранее то, проверяем включена ли историчность, если не включена
+включаем и переходим в пункт 4
+</li>
+<li>
+Если устройство еще не регистрировалось то добавляется новый <code>NodeID</code> и включается режим историчности (для сохранения всех переданных
+показаний).
+</li>
+<li>
+Завершение вызова и возвращение <code>NodeID</code> для передачи показаний.
+</li>
+</ol>
+</section>
+<section id="s-10">
+
+    <h2>
+    <a href="#s-10">Ссылки: </a>
+    </h2>
+<ul>
+<li>
+<a href="https://github.com/open62541/open62541">Open62541</a>
+</li>
+</ul>
+<style>
+.display { display: block; margin: 1em 0; text-align: center }
+</style>
+</section>
+</article>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <a href="https://github.com/pastor/pastor.github.io/edit/master/src/posts/2023-05-02-opcua-detector-1.dj">
+        <i class="fa fa-edit"></i> Исправить
+      </a>
+
+      <a href="/feed.xml">
+        <i class="fa fa-rss"></i> RSS
+      </a>
+
+      <a href="https://github.com/pastor">
+        <i class="fa fa-github"></i> Pastor
+      </a>
+    </p>
+  </footer>
+</body>
+
+</html>

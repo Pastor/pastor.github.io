@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<link href="https://pastor.github.io/feed.xml" rel="self" type="application/atom+xml"/>
+<link href="https://pastor.github.io" rel="alternate" type="text/html"/>
+<updated>2023-05-11T12:31:53.139Z</updated>
+<id>https://pastor.github.io/feed.xml</id>
+<title type="html">Pastor</title>
+<subtitle>Yet another programming blog by Andrey Khlebnikov aka Pastor.</subtitle>
+<author><name>Andrey Khlebnikov</name></author>
+
+<entry>
+<title type="text">OPC UA примитивный датчик.#3 Сборка Open62541.</title>
+<link href="https://pastor.github.io/2023/05/05/opcua-detector-3.html" rel="alternate" type="text/html" title="OPC UA примитивный датчик.#3 Сборка Open62541." />
+<published>2023-05-05T00:00:00+00:00</published>
+<updated>2023-05-05T00:00:00+00:00</updated>
+<id>https://pastor.github.io/2023/05/05/opcua-detector-3</id>
+<author><name>Andrey Khlebnikov</name></author>
+<summary type="html"><![CDATA[В качестве фреймворка реализации Open62541 был выбран проект Open62541. 
+Данный проект является реализацией стандарта OPC UA и может использоваться для работы в качестве клиента и в качестве сервера.
+Он поддерживает работу по бинарному протоколу, что для встраиваемых систем, очень актуально.]]></summary>
+<content type="html" xml:base="https://pastor.github.io/2023/05/05/opcua-detector-3.html"><![CDATA[
+    <h1>
+    <a href="#OPC-UA-3-Open62541">OPC UA примитивный датчик.#3 Сборка Open62541. <time datetime="2023-05-05">May 5, 2023</time></a>
+    </h1>
+<p>В качестве фреймворка реализации <code>Open62541</code> был выбран проект <a href="https://github.com/open62541/open62541">Open62541</a>. 
+Данный проект является реализацией стандарта <code>OPC UA</code> и может использоваться для работы в качестве клиента и в качестве сервера.
+Он поддерживает работу по бинарному протоколу, что для встраиваемых систем, очень актуально.</p>
+<p>Под платформу <code>Pico</code> в выбранном проекте нет поддержки, хотя заявлена интеграция с <code>FreeRTOS</code>. Поэтому сборка проводилась с чистого листа.
+В качестве основы была выбрана более подходящая архитектура (в понятиях проекта это набор окружения целевой платформы) <code>posix</code> и добавлена 
+собственная архитектура с наименованием <code>pico</code>.</p>
+<p>Делем копию <code>posix</code> архитектуры</p>
+
+<figure class="code-block">
+
+
+<pre><code><span class="hl-output">cp -R arch/posix arch/pico</span></code></pre>
+
+</figure>
+<p>Добавляем архитектуру в сборку (файл <code>arch/CMakeLists.txt</code>)</p>
+
+<figure class="code-block">
+
+
+<pre><code><span class="hl-output">add_subdirectory(pico)</span></code></pre>
+
+</figure>
+<p><em>описание</em></p>
+<section id="s-1">
+
+    <h2>
+    <a href="#s-1">Ссылки: </a>
+    </h2>
+<ul>
+<li>
+<a href="https://github.com/open62541/open62541">Open62541</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf">Pico. Getting started</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/picow/connecting-to-the-internet-with-pico-w.pdf">Pico W. Connecting to internet</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf">Pico. C SDK</a>
+</li>
+<li>
+<a href="https://mcuoneclipse.com/2022/09/17/picoprobe-using-the-raspberry-pi-pico-as-debug-probe/">PicoProbe. Usage</a>
+</li>
+</ul>
+<style>
+.display { display: block; margin: 1em 0; text-align: center }
+</style>
+</section>
+]]></content>
+</entry>
+
+<entry>
+<title type="text">OPC UA примитивный датчик.#2 Выбор платформы.</title>
+<link href="https://pastor.github.io/2023/05/05/opcua-detector-2.html" rel="alternate" type="text/html" title="OPC UA примитивный датчик.#2 Выбор платформы." />
+<published>2023-05-05T00:00:00+00:00</published>
+<updated>2023-05-05T00:00:00+00:00</updated>
+<id>https://pastor.github.io/2023/05/05/opcua-detector-2</id>
+<author><name>Andrey Khlebnikov</name></author>
+<summary type="html"><![CDATA[Исходя из функциональных требований описанных в предыдущей части к устройство должно иметь следующие характеристики:]]></summary>
+<content type="html" xml:base="https://pastor.github.io/2023/05/05/opcua-detector-2.html"><![CDATA[
+    <h1>
+    <a href="#OPC-UA-2">OPC UA примитивный датчик.#2 Выбор платформы. <time datetime="2023-05-05">May 5, 2023</time></a>
+    </h1>
+<section id="s-1">
+
+    <h2>
+    <a href="#s-1">Выбор платформы </a>
+    </h2>
+<p>Исходя из функциональных требований описанных в предыдущей части к устройство должно иметь следующие характеристики:</p>
+<ul>
+<li>
+Производительность не менее 40Mhz (<em>почему?</em>)
+</li>
+<li>
+Множество свободных (многофункциональных, конфигурируемых) портов ввода вывода
+</li>
+<li>
+Поддержка таких протоколов как <code>I2C</code>, <code>SPI</code>, а также АЦП
+</li>
+<li>
+Должна иметься возможность отладки
+</li>
+<li>
+Цена
+</li>
+<li>
+Доступность
+</li>
+<li>
+Наличие <code>Wi-Fi</code> модуля
+</li>
+<li>
+Габариты
+</li>
+<li>
+<em>характеристика 4</em>
+</li>
+<li>
+<em>характеристика 5</em>
+</li>
+</ul>
+<section id="STM32">
+
+    <h3>
+    <a href="#STM32">STM32 </a>
+    </h3>
+<section id="s-2">
+
+    <h4>
+    <a href="#s-2">Стоимость </a>
+    </h4>
+</section>
+</section>
+<section id="AVR">
+
+    <h3>
+    <a href="#AVR">AVR </a>
+    </h3>
+<ul>
+<li>
+<em>описание</em>
+</li>
+</ul>
+<section id="s-3">
+
+    <h4>
+    <a href="#s-3">Стоимость </a>
+    </h4>
+</section>
+</section>
+<section id="PIC-PIC32CM-JH01">
+
+    <h3>
+    <a href="#PIC-PIC32CM-JH01">PIC платформа PIC32CM JH01(<em><em>плохой пример, переделать</em></em>) </a>
+    </h3>
+<ol>
+<li>
+48 MHz Arm Cortex M0+ Core
+</li>
+<li>
+512 KB Flash and 64 KB SRAM
+</li>
+<li>
+Two CAN transceivers
+</li>
+<li>
+Dual 12-bit simultaneous sampling Analog-to-Digital Converters (ADCs)
+</li>
+<li>
+Timer/Counter for Control (TCC) peripheral provides dedicated timers for industrial and motor control
+</li>
+<li>
+Flexible peripherals include four Serial Communication Modules (SERCOMs) that can be configured to act as a USART, UART, SPI, I2C, RS485 or LIN bus interface
+</li>
+</ol>
+<section id="s-4">
+
+    <h4>
+    <a href="#s-4">Стоимость </a>
+    </h4>
+<p>На <a href="https://www.microchip.com/en-us/development-tool/EV81X90A">официальном сайте</a> производителя единица изделия стоит - 138.00$ без учета доставки.</p>
+</section>
+</section>
+<section id="ARM-Raspberry-PI-Pico-W">
+
+    <h3>
+    <a href="#ARM-Raspberry-PI-Pico-W">ARM платформа Raspberry PI Pico W </a>
+    </h3>
+<ol>
+<li>
+Двухядерный <code>Arm Cortex M0+</code> процессор, с максимальной изменямой частотой до 133 MHz
+</li>
+<li>
+264kB ОЗУ, 2MB программного кода
+</li>
+<li>
+Поддержка <code>USB</code> 1.1
+</li>
+<li>
+Имеет режимы малого энергопортебления
+</li>
+<li>
+Программируется переносом прошивки на диск (<code>UF2</code>)
+</li>
+<li>
+26 многофункциональных <code>GPIO</code>
+</li>
+<li>
+2 × <code>SPI</code>, 2 × <code>I2C</code>, 2 × <code>UART</code>, 3 × 12 битных АЦП, 16 × ШИМ каналов
+</li>
+<li>
+Имеет управляемый тамеры
+</li>
+<li>
+Имеет внутри температурный датчик
+</li>
+<li>
+Иммет внутри прошивки чипа библиотеку работы с числами с плавующей точкой
+</li>
+<li>
+8 × программируемых автомата ввода-вывода (<code>PIO</code>)
+</li>
+<li>
+Wireless (802.11n), single-band (2.4 GHz)
+</li>
+</ol>
+<section id="s-5">
+
+    <h4>
+    <a href="#s-5">Распиновка </a>
+    </h4>
+
+<figure>
+
+<img alt="" src="/assets/picow-pinout.svg">
+</figure>
+</section>
+<section id="s-6">
+
+    <h4>
+    <a href="#s-6">Отладка </a>
+    </h4>
+<p>В качестве отладочного средства можно использовать второй модуль <code>Pico</code> с установленной прошивкой <a href="https://github.com/raspberrypi/picoprobe.git">probe</a>. 
+Второй модуль выступает в роли посредника между хостовым компьютером и основной <code>Pico</code> платы. Соединение осуществляется через отладочный порт <code>SWD</code>.</p>
+
+<figure>
+
+<img alt="" src="/assets/picoprobewiring.jpg">
+</figure>
+<p>Устанавливается <code>OpenOCD</code> в качестве отладочной утилиты.</p>
+</section>
+<section id="s-7">
+
+    <h4>
+    <a href="#s-7">Стоимость </a>
+    </h4>
+<p>При покупке на территории России примерная цена за единицу - 1000 р. без учета доставки (самовывоз). При заказе на Китайских площадках <code>Aliexpress</code>, <code>TaoBao</code> и д.р.
+примерная цена за единицу - 450 р. без учета доставки.</p>
+</section>
+</section>
+<section id="KP580BM80A">
+
+    <h3>
+    <a href="#KP580BM80A">KP580BM80A </a>
+    </h3>
+<ul>
+<li>
+<em>описание</em>
+</li>
+</ul>
+<section id="s-8">
+
+    <h4>
+    <a href="#s-8">Стоимость </a>
+    </h4>
+</section>
+</section>
+<section id="s-9">
+
+    <h3>
+    <a href="#s-9">Выбор и вывод </a>
+    </h3>
+<p><em>сравниваем</em></p>
+<p><em>отсеиваем</em></p>
+<p><em>делаем выводы</em></p>
+</section>
+</section>
+<section id="s-10">
+
+    <h2>
+    <a href="#s-10">Ссылки: </a>
+    </h2>
+<ul>
+<li>
+<a href="https://github.com/open62541/open62541">Open62541</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf">RP2040</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf">RP2040. HardWire</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf">RP2040. Datasheet</a>
+</li>
+<li>
+<a href="https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf">Pico W. Datasheet</a>
+</li>
+<li>
+<a href="https://mcuoneclipse.com/2022/09/17/picoprobe-using-the-raspberry-pi-pico-as-debug-probe/">PicoProbe. Usage</a>
+</li>
+</ul>
+<style>
+.display { display: block; margin: 1em 0; text-align: center }
+</style>
+</section>
+]]></content>
+</entry>
+
+<entry>
+<title type="text">OPC UA примитивный датчик.#1 Общее описание</title>
+<link href="https://pastor.github.io/2023/05/02/opcua-detector-1.html" rel="alternate" type="text/html" title="OPC UA примитивный датчик.#1 Общее описание" />
+<published>2023-05-02T00:00:00+00:00</published>
+<updated>2023-05-02T00:00:00+00:00</updated>
+<id>https://pastor.github.io/2023/05/02/opcua-detector-1</id>
+<author><name>Andrey Khlebnikov</name></author>
+<summary type="html"><![CDATA[Попробуем описать простейшую функциональность некого мифического простого датчика, который с заданной периодичностью будет
+отсылать показания на сервер.]]></summary>
+<content type="html" xml:base="https://pastor.github.io/2023/05/02/opcua-detector-1.html"><![CDATA[
+    <h1>
+    <a href="#OPC-UA-1">OPC UA примитивный датчик.#1 Общее описание <time datetime="2023-05-02">May 2, 2023</time></a>
+    </h1>
+<p>Попробуем описать простейшую функциональность некого мифического простого датчика, который с заданной периодичностью будет
+отсылать показания на сервер.</p>
+<ul>
+<li>
+В этой части рассмотрим общее представление о датчике.
+</li>
+<li>
+Общую структуру датчика.
+</li>
+<li>
+Структуру передаваемых данных.
+</li>
+<li>
+Алгоритм передачи информации на сервер.
+</li>
+<li>
+Поведение датчика при обрыве связи.
+</li>
+<li>
+Резервирование передаваемых данных при обрыве связи.
+</li>
+<li>
+Структуру конфигурации.
+</li>
+</ul>
+<section id="s-1">
+
+    <h2>
+    <a href="#s-1">Общее положение </a>
+    </h2>
+<p>Что датчик, что серверная часть, будут использовать <code>open62541</code> как фреймворк для <code>OPC UA</code>. Аутентификация и авторизация клиента (датчика)
+на данном этапе будет отключена.</p>
+</section>
+<section id="s-2">
+
+    <h2>
+    <a href="#s-2">Функциональные требования к датчику </a>
+    </h2>
+<ol>
+<li>
+Датчик должен представлять из себя небольшое устройство с возможностью работы по одному или нескольким каналам связи (<code>Ethernet</code>).
+</li>
+<li>
+Датчик должен иметь возможность передавать несколько значений, несколько типов значений. например если датчик включает в себя
+устройство изменения давления и устройство измерения влажности, оно должно иметь возможность передавать данные с обоих своих устройств.
+</li>
+<li>
+Датчик должен иметь синхронизированное время с сервером приема показаний (<code>NTP</code>).
+</li>
+<li>
+Датчик должен уметь работать в одноранговой (<code>Ethernet</code>) сети и самостоятельно искать в ней сервер для передачи (агрегации) показаний.
+</li>
+<li>
+Должен обеспечивать сохранение полученных показаний (в ограничениях связанных с объемом памяти) при не возможности их передать на сервер.
+</li>
+<li>
+Должен обеспечивать хранение своих настроек в энергонезависимой памяти (<code>EEPROM</code>), с возможностью их изменения без изменения программного
+кода. Также не должен иметь возможности менять настройки из программного кода.
+</li>
+</ol>
+</section>
+<section id="s-3">
+
+    <h2>
+    <a href="#s-3">Общая структура датчика </a>
+    </h2>
+<p>Датчик (устройство) будет состоять из следующих компонент: само устройство (<code>Rspberry Pi Pico W</code>), внешний <code>EEPROM</code> (<code>AT24С256</code>),
+внешней <code>FLASH</code>(<code>W25Q128</code>).</p>
+
+<figure>
+
+<img alt="" src="/assets/fun_schema_1.jpg">
+</figure>
+<p><code>Pico W</code> не имеет своей внутренней <code>EEPROM</code>, поэтому будет использоваться внешняя. Для обеспечания работы со временем, будет использоваться <code>RTC</code>.
+<code>Pico W</code> имеет внутренний модуль <code>RTC</code>, он энергозависимый, т.е. не имеет стороннего питания, поэтому его следует устанавливать при каждом запуске
+устройства. Но исходя из того, что одно из требований - синхронизация по времени, энергозависимость не является причиной отказа от внутреннего
+модуля в замен внешнего.</p>
+</section>
+<section id="s-4">
+
+    <h2>
+    <a href="#s-4">Функциональные требования к серверу </a>
+    </h2>
+<ol>
+<li>
+Сервер должен обеспечивать регистрацию устройства, а также однозначное определение его типа и назначения. передавать устройству
+<code>NodeID</code> в который устройство будет писать показания.
+</li>
+<li>
+Сервер должен сохранять все пришедшие показания, а также, при необходимости, агрегировать их
+</li>
+<li>
+Сервер должен обеспечивать свое нахождение (детектирование) в одноранговой сети (<code>Discovery</code>).
+</li>
+</ol>
+</section>
+<section id="s-5">
+
+    <h2>
+    <a href="#s-5">Общая структура сервера </a>
+    </h2>
+<p>Сервер приема(агрегации) показаний датчиков будет состоять из следующих компонент: модуль <code>RTC</code> (с синхронизацией по <code>NTP</code>), модулем
+обеспечивающим обнаружение сервера в одноранговой сети (<code>multicast</code>), механизмом обеспечивающем регистрацию датчика на сервере, механизмом
+сохранения передаваемых показаний.</p>
+
+<figure>
+
+<img alt="" src="/assets/fun_schema_2.jpg">
+</figure>
+<p>Механизмом который будет обеспечивать сохранение передаваемых датчиком показаний будет служить <code>OPC UA Historization</code></p>
+</section>
+<section id="s-6">
+
+    <h2>
+    <a href="#s-6">Среда функционирования датчиков. Модель среды. </a>
+    </h2>
+<p>Для моделирования среды будут использоваться следующие компоненты: датчики (датчик) на базе <code>Raspberry Pi Pico W</code> с прошивкой обеспечивающей
+описанную ранее функциональность, маршрутизатор (обеспечивающий также <code>Wi-Fi</code>, <code>DHCP</code> и <code>NTP</code> - <code>Mikrotik</code>), сервер <code>OPC UA</code> запущенный на
+платформе <code>PC</code> или на <code>Raspberry Pi 3</code>. Все они будут находится в одноранговой сети.</p>
+
+<figure>
+
+<img alt="" src="/assets/top_model_1.jpg">
+</figure>
+</section>
+<section id="s-7">
+
+    <h2>
+    <a href="#s-7">Структура передаваемых данных </a>
+    </h2>
+<p>Структуру передаваемых на сервер данных(показаний) можно представить в виде <code>C</code> составного типа данных:</p>
+
+<figure class="code-block">
+
+
+<pre><code><span class="hl-keyword">struct</span> <span class="hl-title class_">Packet</span> {</code>
+<code>    UA_DateTime  time;</code>
+<code>    UA_UInt16    kind;</code>
+<code>    UA_Int64     value;</code>
+<code>}</code></pre>
+
+</figure>
+<p>в котором <code>time</code> - это время когда датчик получил конкретное значение, <code>kind</code> - это тип передаваемого значения (обеспечение возможности
+передачи нескольких значений с одного датчика) тут будем иметь явное ограничение в 65535 возможных показаний, <code>value</code> - это непосредственно
+само значение показания.</p>
+<p>Время получения показаний, исходя из функциональных требований, должно быть синхронизировано с сервером приема (агрегации) показаний датчиков.</p>
+<p>Такая же структура данных будет использоваться и при сохранении полученных показаний при не возможности их отсылки на сервер приема
+(агрегации) показаний.</p>
+</section>
+<section id="s-8">
+
+    <h2>
+    <a href="#s-8">Последовательность инициализации датчика в среде </a>
+    </h2>
+<p>После сброса/включения устройства будет выполняться следующа] последовательность дейтсвий:</p>
+<ol>
+<li>
+Чтение параметров (настроек) из внешней памяти <code>EEPROM</code>
+</li>
+<li>
+Инициализация <code>Wi-Fi</code>(Ethernet) модуля для подключения к сети
+</li>
+<li>
+Определение сервера <code>NTP</code> (в представленной выше топологии это тот же сервер что и <code>DHCP</code>). Синхронизация времени и установка <code>RTC</code> модуля.
+</li>
+<li>
+Запуск задачи сохранения показаний в случае невозможности их передать: инициализация внешней <code>FLASH</code> памяти и организация внутреннего получения
+показаний и сохранения их на <code>FLASH</code> (не является критически важным компонентом)
+</li>
+<li>
+Получение из настроек <code>discovery</code> адреса сервера и попытка определения его в сети. В случае если сервер не определен, этот пункт повторяется.
+</li>
+<li>
+После нахождения сервера устанавливается соединение с ним. При не возможности установить соединение повторяется пункт 5
+</li>
+<li>
+После установки соединения производится регистрация устройства на серврере и получение в ответ <code>NodeID</code> для передачи показаний.
+</li>
+<li>
+В случае обрыва соединения переходим в пункт 5 и все показания перенаправляются в задачу сохранения показаний.
+</li>
+<li>
+Если есть сохраненные показания они передаются на сервер в момнт простоя приема показаний и/или по запросу сервера
+</li>
+</ol>
+</section>
+<section id="s-9">
+
+    <h2>
+    <a href="#s-9">Последовательность инициализации и рестрации устройства на серверер </a>
+    </h2>
+<p>После перезагрузки/загрузки сервера выполняется следующая последовательность дейтсвий:</p>
+<ol>
+<li>
+Инициализация сети
+</li>
+<li>
+Синхронизация времени
+</li>
+<li>
+Запуск модуля обнаружения сервера
+</li>
+<li>
+Инициализация функций, типов данный, историчности - для обеспечения приема показаний датчиков и их регистрации
+</li>
+<li>
+Прием соединений
+</li>
+</ol>
+<p>При приеме запроса на регистрацию датчика:</p>
+<ol>
+<li>
+Получение необходимых сведений от устройства (в простейшем случае это <code>MAC</code> адрес, в дальнейшем, при включении аутентификации по сертификату
+сервер будет получать все необходимую информацию о датчике)
+</li>
+<li>
+Поиск устройства, на возможность его регистрации ранее. Если устройство регистрировалось ранее то, проверяем включена ли историчность, если не включена
+включаем и переходим в пункт 4
+</li>
+<li>
+Если устройство еще не регистрировалось то добавляется новый <code>NodeID</code> и включается режим историчности (для сохранения всех переданных
+показаний).
+</li>
+<li>
+Завершение вызова и возвращение <code>NodeID</code> для передачи показаний.
+</li>
+</ol>
+</section>
+<section id="s-10">
+
+    <h2>
+    <a href="#s-10">Ссылки: </a>
+    </h2>
+<ul>
+<li>
+<a href="https://github.com/open62541/open62541">Open62541</a>
+</li>
+</ul>
+<style>
+.display { display: block; margin: 1em 0; text-align: center }
+</style>
+</section>
+]]></content>
+</entry>
+
+</feed>
